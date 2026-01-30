@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    #    url: jdbc:postgresql://db.schmihxzsrvanjrndype.supabase.co:5432/postgres
+    url: jdbc:postgresql://db.schmihxzsrvanjrndype.supabase.co:5432/postgres?sslmode=require
+    username: postgres
+    password: ${DB_PASSWORD}
+  #    hikari:
+  #      maximum-pool-size: 10     # 동시에 우지할 최대 DB 연결 수 (원격은 보통 10개 내외로 충분)
+  #      minimum-idle: 2           # 유휴 상태로 최소 유지할 연결 수 (높으면 낭비됨)
+  #      connection-timeout: 30000 # 풀에서 커넥션을 못 구했을 때 최대 대기 시간(ms)
+  #      idle-timeout: 600000      # 놀고 있는 커넥션을 얼마 후 정리할지(ms)
+  #      max-lifetime: 1800000     # 커넥션의 최대 수명(ms)으로 네트워크 환경에서 오래된 연결 이슈 방지
+
+  # 상단의 주석 두부분 각각 테스트 필요 오류 없으면 추가
+
+  jpa:
+    hibernate:
+      ddl-auto: validate         # 엔티티와 DB 스키마가 맞는지 검증만(자동 생성/수정 안 함)
+    properties:
+      hibernate:
+        format_sql: true         # SQL 로그를 보기 좋게 출력
+        jdbc:
+  #          time_zone: Asia/Seoul  # Hibernate가 JDBC로 날짜/시간을 처리할 때 기준 타임존 힌트
+
+  flyway:
+    enabled: false                      # 앱 실행 시 마이그레이션 적용
+#    locations: classpath:db/migration  # 마이그레이션 SQL 파일 위치(기본값임 헷갈리지 않게 적어둠)
