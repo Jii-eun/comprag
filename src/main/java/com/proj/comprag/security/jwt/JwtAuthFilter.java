@@ -6,6 +6,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +34,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws IOException, ServletException {
+
+//        System.out.println("-------HIT " + request.getRequestURI());
+//        System.out.println("-------AUTH " + request.getHeader("Authorization"));
+
         String header = request.getHeader("Authorization"); // 이 글씨는 뭐로정해지나?
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -46,21 +52,45 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         UUID userId = jwtProvider.getUserId(token);
+//        System.out.println("-------userId = " + userId);
 
         userRepository.findById(userId).ifPresent(user -> {
             // 최소 구현: 권한은 admin 여부만
-            var authroties = user.getIsAdmin()
+            var authorities = user.getIsAdmin()
                     ? List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
                     :  List.of(new SimpleGrantedAuthority("ROLE_USER"));
+
+            // 1) 그냥 찍기 (이것만으로도 보통 충분)
+            logger.info("authorities = "+ authorities);
+
+            // 2) 더 깔끔하게 권한 문자열만 찍기(추천)
+            logger.info( "authoritiesStr = "+ authorities.stream()
+                    .map(SimpleGrantedAuthority::getAuthority)
+                    .toList());
+
 
             var auth = new UsernamePasswordAuthenticationToken(
                     user.getId().toString(),
                     null,
-                    authroties
+                    authorities
             );
 
+            logger.info("principal = "+ auth.getPrincipal());
+            logger.info("isAuthenticated = "+ auth.isAuthenticated());
+
             SecurityContextHolder.getContext().setAuthentication(auth);
+
+//            var auth = new UserPrincipal(
+//                    user.getId(),
+//                    user.getEmail(),
+//                    user.getIsAdmin()
+//            );
         });
+
+        var userOpt = userRepository.findById(userId);
+//        System.out.println("-------user found? " + userOpt.isPresent());
+
+        logger.info("JVM zone={}" + java.time.ZoneId.systemDefault());
 
         filterChain.doFilter(request, response);
 

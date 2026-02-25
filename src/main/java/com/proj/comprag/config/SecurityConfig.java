@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .sessionManagement(sm
                         -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))   // stateless 설정
                 .authorizeHttpRequests(auth
-                        -> auth.requestMatchers("/health", "/api/auth/**", "/h2-console/**")    //permit all
+                        -> auth.requestMatchers("/health", "/api/auth/**")    //permit all
                         .permitAll().anyRequest().authenticated())  // anyRequest().authenticated()) 이 처리로 인해 기본적으로 전부 로그인 필요 상태로 처리됨
                 .headers(headers
                         -> headers.frameOptions(frame -> frame.disable())) //h2-console용

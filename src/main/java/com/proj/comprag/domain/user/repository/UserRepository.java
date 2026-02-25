@@ -11,4 +11,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     // Optional<T>는 “값이 있을 수도/없을 수도 있음”을 표현하는 컨테이너
     Optional<User> findByEmail(String email);
 
+//    List<User> findAllOrderByCreatedAt();
+
+//    List<User> findAllById(UUID id);
+//
+//    User findOneById(UUID userId);
 }

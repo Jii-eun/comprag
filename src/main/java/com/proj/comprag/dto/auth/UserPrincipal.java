@@ -1,4 +1,9 @@
 package com.proj.comprag.dto.auth;
 
-public record UserPrincipal() {
+import java.util.UUID;
+
+public record UserPrincipal(
+        UUID userId,
+        String email,
+        boolean isAdmin) {
 }

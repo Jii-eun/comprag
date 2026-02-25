@@ -1,6 +1,6 @@
 package com.proj.comprag.common.exception;
 
-public class BadRequestExcepetion extends RuntimeException {
+public class BadRequestException extends RuntimeException {
     private final ErrorCode errorCode;
 
     public BadRequestException(ErrorCode errorCode) {

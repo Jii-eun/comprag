@@ -1,13 +1,13 @@
 services:
   postgres:
     image: postgres:16
-    container_name: comRAG-postgres
+    container_name: comrag-postgres
     ports:
 #      - "5432:5432"
       - "127.0.0.1:5432:5432" # 공용망 사용 시 안전을 위해 localhost로 묶음
     environment:
-      POSTGRES_DB: compRAG
-      POSTGRES_USER: compRAG
+      POSTGRES_DB: comprag
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - compRAG_pgdata:/var/lib/postgresql/data # volumes 때문에 컨테이너 내려도 데이터가 유지됨(영속성)

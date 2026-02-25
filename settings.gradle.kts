@@ -1,1 +1,1 @@
-rootProject.name = "compRAG"
+rootProject.name = "comprag"

@@ -9,7 +9,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "category_permisions")
+@Table(name = "category_permissions")
 public class Permission {
 
     @Id
@@ -20,10 +20,10 @@ public class Permission {
     private UUID categoryId;
 
     @Column(name = "team_id",  nullable = false)
-    private String teamId;
+    private UUID teamId;
 
     @Column(name = "created_by",  nullable = false)
-    private String createdBy;
+    private UUID createdBy;
 
     @Column(name = "can_view",  nullable = false)
     private Boolean canView;

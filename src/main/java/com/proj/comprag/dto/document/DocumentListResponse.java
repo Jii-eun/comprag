@@ -9,7 +9,7 @@ public record DocumentListResponse(
         UUID categoryId,
         String categoryName,
         UUID createdBy,
-        String createdByName,
+        String userName,
         OffsetDateTime updatedAt
 ) {
 }

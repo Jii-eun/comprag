@@ -9,7 +9,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name="members")
+@Table(name="team_members")
 public class Member {
     //setter
     @Id
@@ -17,10 +17,10 @@ public class Member {
     private UUID id;
 
     @Column(name="team_id", nullable = false)
-    private String teamId;
+    private UUID teamId;
 
     @Column(name="user_id", nullable = false)
-    private String userId;
+    private UUID userId;
 
     @Column(name="role", nullable = false)
     private String role;
@@ -30,8 +30,8 @@ public class Member {
 
     protected Member() {}
 
-    public Member(UUID id, String email, String teamId,
-                  String userId, String role, OffsetDateTime createdAt) {
+    public Member(UUID id, String email, UUID teamId,
+                  UUID userId, String role, OffsetDateTime createdAt) {
         this.id = id;
         this.teamId = teamId;
         this.userId = userId;

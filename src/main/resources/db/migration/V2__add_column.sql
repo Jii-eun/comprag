@@ -1,8 +1,4 @@
-ALTER TABLE document_versions
-ADD COLUMN edit_reason text NULL;
-
--- name 컬럼 있음-취소
--- ALTER TABLE team
--- ADD COLUMN team_name text NOT NULL;
-
---두개는 아직 entity 추가 안함
+ALTER TABLE "documents"
+    ADD CONSTRAINT "FK_document_versions_TO_documents_latest_version"
+    FOREIGN KEY ("latest_version_id")
+    REFERENCES "document_versions" ("id");

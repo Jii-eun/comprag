@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -28,6 +30,8 @@ public class Audit {
     @Column(name = "resource_id",  nullable = false)
     private UUID resourceId;   // permission 로그이므로 category_permission_id
 
+    //  json 설정
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "metadata", nullable = false)
     private String metadata;    // DB는 JSONB임 확인 필요
 

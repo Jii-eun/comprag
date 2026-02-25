@@ -1,4 +1,4 @@
-package com.proj.comprag.dto.document;
+package com.proj.comprag.dto.category;
 
 import java.util.UUID;
 
