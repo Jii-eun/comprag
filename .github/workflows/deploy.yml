@@ -55,5 +55,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             mkdir -p /home/${{ secrets.EC2_USERNAME }}/app
+            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             chmod +x /home/${{ secrets.EC2_USERNAME }}/app/deploy.sh
             /home/${{ secrets.EC2_USERNAME }}/app/deploy.sh
