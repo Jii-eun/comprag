@@ -1,9 +1,7 @@
 package com.proj.comprag.common.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
