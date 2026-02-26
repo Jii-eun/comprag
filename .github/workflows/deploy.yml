@@ -45,4 +45,4 @@ jobs:
           script: |
             mkdir -p /home/${{ secrets.EC2_USERNAME }}/app
             chmod +x /home/${{ secrets.EC2_USERNAME }}/app/deploy.sh
-            /home/${{ secretss.EC2_USERNAME }}/app/deploy.sh
+            /home/${{ secrets.EC2_USERNAME }}/app/deploy.sh
