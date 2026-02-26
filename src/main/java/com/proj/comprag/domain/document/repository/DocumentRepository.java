@@ -19,7 +19,7 @@ public interface DocumentRepository extends JpaRepository<Document, UUID> {
 
     // 목록 조회 + 작성자명 + 카테고리명 - projection 방식 조회
     @Query("""
-        select  new com.proj.compRAG.dto.document.DocumentListResponse(
+        select  new com.proj.comprag.dto.document.DocumentListResponse(
             d.id as id,
             d.title as title,
             d.categoryId as categoryId,
@@ -43,7 +43,7 @@ public interface DocumentRepository extends JpaRepository<Document, UUID> {
     // 문서 상세 조회 with content
     // 별칭 constructor expression에서는 의미가 없음. 순서+타입으로 매칭
     @Query("""
-        SELECT new com.proj.compRAG.dto.document.DocumentResponse(
+        SELECT new com.proj.comprag.dto.document.DocumentResponse(
             d.id as id,
             d.title as title,
             d.categoryId as categoryId,

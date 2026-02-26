@@ -49,7 +49,8 @@ public class DocumentService {
         UUID documentId = UUID.randomUUID();
 
         // categoryId는 추후에 request로 받아서 넘겨야함
-        UUID categoryId = UUID.fromString("9f3d0ff3-5349-42fa-935e-83871489f682");
+//        UUID categoryId2 = UUID.fromString("92be38a9-7ed3-4741-a3bf-63493fe11aeb");
+        UUID categoryId = request.categoryId();
         UUID versionId = UUID.randomUUID();
         OffsetDateTime now = OffsetDateTime.now();
 
