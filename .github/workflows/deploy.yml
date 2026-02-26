@@ -35,6 +35,17 @@ jobs:
           target: "/home/${{ secrets.EC2_USERNAME }}/app"
           strip_components: 2 # build/libs 경로를 제외하고 파일만 전송
 
+      # 스크립트 전송
+      - name: Copy Script to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_IP }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "scripts/deploy.sh" # 프로젝트 내 실제 경로를 적으세요!
+          target: "/home/${{ secrets.EC2_USERNAME }}/app"
+          strip_components: 1
+
       # EC2에 접속해서 배포 스크립트 실행
       - name: Execute Remote Script
         uses: appleboy/ssh-action@v1.0.3
