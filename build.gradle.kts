@@ -56,3 +56,16 @@ tasks.withType<Test> {
 springBoot {
 	buildInfo()
 }
+
+//kotlin 코드
+//tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+//	archiveFileName.set("comprag-app.jar")
+//}
+tasks.bootJar {
+	archiveFileName.set("comprag-app.jar")
+}
+
+//groovy
+//tasks.named('bootJar') {
+//	archiveFileName = 'comprag-app.jar'
+//}
