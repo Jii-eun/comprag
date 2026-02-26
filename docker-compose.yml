@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:16
-    container_name: comrag-postgres
+    container_name: comprag-postgres
     ports:
 #      - "5432:5432"
       - "127.0.0.1:5432:5432" # 공용망 사용 시 안전을 위해 localhost로 묶음
@@ -10,8 +10,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - compRAG_pgdata:/var/lib/postgresql/data # volumes 때문에 컨테이너 내려도 데이터가 유지됨(영속성)
+      - comprag_pgdata:/var/lib/postgresql/data # volumes 때문에 컨테이너 내려도 데이터가 유지됨(영속성)
 
 
 volumes:
-  compRAG_pgdata: # 이름만 있는 볼륨 하나를 만들겠다는 선언으로, Docker가 실제 경로 자동으로 관리
+  comprag_pgdata: # 이름만 있는 볼륨 하나를 만들겠다는 선언으로, Docker가 실제 경로 자동으로 관리
