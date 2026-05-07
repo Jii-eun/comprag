@@ -1,12 +1,11 @@
-package com.proj.compRAG.web.auth;
+package com.proj.comprag.web.auth;
 
-import com.proj.compRAG.dto.auth.AuthResponse;
-import com.proj.compRAG.dto.auth.LoginRequest;
-import com.proj.compRAG.dto.auth.SignUpRequest;
-import com.proj.compRAG.service.auth.AuthService;
+import com.proj.comprag.dto.auth.AuthResponse;
+import com.proj.comprag.dto.auth.LoginRequest;
+import com.proj.comprag.dto.auth.SignUpRequest;
+import com.proj.comprag.service.auth.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

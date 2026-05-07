@@ -1,4 +1,4 @@
-package com.proj.compRAG.dto.document;
+package com.proj.comprag.dto.document;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -9,7 +9,7 @@ public record DocumentListResponse(
         UUID categoryId,
         String categoryName,
         UUID createdBy,
-        String createdByName,
+        String userName,
         OffsetDateTime updatedAt
 ) {
 }

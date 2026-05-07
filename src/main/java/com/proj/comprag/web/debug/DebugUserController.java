@@ -1,15 +1,13 @@
-package com.proj.compRAG.web.debug;
+package com.proj.comprag.web.debug;
 
-import com.proj.compRAG.domain.user.entity.User;
-import com.proj.compRAG.domain.user.repository.UserRepository;
+import com.proj.comprag.domain.user.entity.User;
+import com.proj.comprag.domain.user.repository.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/debug/users")
@@ -22,7 +20,7 @@ public class DebugUserController {
     }
 
     @GetMapping
-    public List<com.proj.compRAG.domain.user.entity.User> list() {
+    public List<com.proj.comprag.domain.user.entity.User> list() {
         return userRepository.findAll();
     }
 

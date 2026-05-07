@@ -1,12 +1,12 @@
-package com.proj.compRAG.service.auth;
+package com.proj.comprag.service.auth;
 
-import com.proj.compRAG.domain.user.entity.User;
-import com.proj.compRAG.domain.user.repository.UserRepository;
-import com.proj.compRAG.dto.auth.AuthResponse;
-import com.proj.compRAG.dto.auth.LoginRequest;
-import com.proj.compRAG.dto.auth.SignUpRequest;
-import com.proj.compRAG.dto.auth.UserSummaryResponse;
-import com.proj.compRAG.security.jwt.JwtProvider;
+import com.proj.comprag.domain.user.entity.User;
+import com.proj.comprag.domain.user.repository.UserRepository;
+import com.proj.comprag.dto.auth.AuthResponse;
+import com.proj.comprag.dto.auth.LoginRequest;
+import com.proj.comprag.dto.auth.SignUpRequest;
+import com.proj.comprag.dto.auth.UserSummaryResponse;
+import com.proj.comprag.security.jwt.JwtProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

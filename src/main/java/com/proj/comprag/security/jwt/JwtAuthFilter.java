@@ -1,16 +1,15 @@
 package com.proj.comprag.security.jwt;
 
-<<<<<<< Updated upstream:src/main/java/com/proj/compRAG/security/jwt/JwtAuthFilter.java
 
-=======
 import com.proj.comprag.domain.user.repository.UserRepository;
 import com.proj.comprag.dto.auth.UserPrincipal;
->>>>>>> Stashed changes:src/main/java/com/proj/comprag/security/jwt/JwtAuthFilter.java
+import com.proj.comprag.domain.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,7 +24,7 @@ import java.util.UUID;
 @RequiredArgsConstructor    // Lombok 있어야 사용가능한 컴포넌트 -> 없이 하려면 생성자 직접 주입하면 된다고 함
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final jwtProvider;
+    private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
 
 
@@ -45,7 +44,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws IOException, ServletException {
 
-
         String header = request.getHeader("Authorization"); // 이 글씨는 뭐로정해지나?
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -63,7 +61,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         userRepository.findById(userId).ifPresent(user -> {
             // 최소 구현: 권한은 admin 여부만
-            var authorities = user.getIsAdmin()
+            var authroties = user.getIsAdmin()
                     ? List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
                     :  List.of(new SimpleGrantedAuthority("ROLE_USER"));
 
@@ -92,7 +90,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             logger.info("isAuthenticated = "+ auth.isAuthenticated());
 
             SecurityContextHolder.getContext().setAuthentication(auth);
-
         });
 
         logger.info("JVM zone={}" + java.time.ZoneId.systemDefault());

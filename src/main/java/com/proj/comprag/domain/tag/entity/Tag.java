@@ -1,4 +1,4 @@
-package com.proj.compRAG.domain.tag.entity;
+package com.proj.comprag.domain.tag.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

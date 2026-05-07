@@ -1,4 +1,4 @@
-package com.proj.compRAG.dto.document;
+package com.proj.comprag.dto.category;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

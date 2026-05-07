@@ -46,3 +46,9 @@ postgres-data/
 data/
 db-data/
 **/postgres-data/
+
+# CI/CD 파일
+!/scripts/**
+#/scripts/**_backup.sh
+#.github/workflow
+**_backup.**

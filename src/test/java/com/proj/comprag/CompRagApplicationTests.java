@@ -1,4 +1,4 @@
-package com.proj.compRAG;
+package com.proj.comprag;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -35,8 +35,8 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
 
-//	implementation("org.flywaydb:flyway-core")
-//	implementation("org.flywaydb:flyway-database-postgresql")
+	implementation("org.flywaydb:flyway-core")
+	implementation("org.flywaydb:flyway-database-postgresql")
 
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.postgresql:postgresql")
@@ -54,3 +54,20 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+springBoot {
+	buildInfo()
+}
+
+//kotlin 코드
+//tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+//	archiveFileName.set("comprag-app.jar")
+//}
+tasks.bootJar {
+	archiveFileName.set("comprag-app.jar")
+}
+
+//groovy
+//tasks.named('bootJar') {
+//	archiveFileName = 'comprag-app.jar'
+//}

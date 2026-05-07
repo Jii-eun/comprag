@@ -1,4 +1,4 @@
-package com.proj.compRAG.dto.auth;
+package com.proj.comprag.dto.auth;
 
 import java.util.UUID;
 

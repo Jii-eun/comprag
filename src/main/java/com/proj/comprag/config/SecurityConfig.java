@@ -1,4 +1,4 @@
-package com.proj.comprag.config;
+package com.proj.compRAG.config;
 
 import com.proj.comprag.security.jwt.JwtAuthFilter;
 import jakarta.servlet.ServletException;
@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    // 로그인없이 사용할 수 있도록 인증 우회 처리
+    // 우선, 로그인없이 사용할 수 있도록 인증 우회 처리
 //    private final JwtAuthFilter jwtAuthFilter;
 //    @Bean
 //    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

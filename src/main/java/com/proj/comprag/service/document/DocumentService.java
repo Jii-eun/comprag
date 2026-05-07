@@ -173,10 +173,7 @@ public class DocumentService {
                 if (categoryChanged) {
                     doc.setCategoryId(request.categoryId());
                 }
-                //
-//                doc.setUpdatedAt(now);
             }
-//                documentRepository.save(doc); // 불필요
             // JPA가 트랜잭션 범위 안에서 DB로부터 조회한 엔티티(doc)의 상태를 지켜보고 있음
 
 
@@ -205,14 +202,12 @@ public class DocumentService {
 
     // 공용 함수
     // 문서 검증
-//    @Transactional(readOnly = true)
     public Document loadDocument(UUID docId) {
         return documentRepository.findByIdAndDeletedAtIsNull(docId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.DOCUMENT_NOT_FOUND));
     }
 
     // 문서 버전 검증 + 최신 버전 조회
-//    @Transactional(readOnly = true)
     public DocumentVersion loadDocumentVersion(UUID docId) {
         return documentVersionRepository.findFirstByDocumentIdOrderByVersionNumberDesc(docId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.DOCUMENT_NOT_FOUND));
@@ -220,7 +215,6 @@ public class DocumentService {
 
     // 하위 버전만 페이징하여 조회 (doc 상세 조회와 분리)
     // 추후 화면에서 문서 조회 시 하위 버전 여러개를 동시에 확인하여 버전 이동 가능
-//    @Transactional
     public Page<DocumentVersion> loadDocVers(UUID docId, Pageable pageable) {
         return documentVersionRepository.findAllByDocumentId(docId, pageable)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.DOCUMENT_NOT_FOUND));

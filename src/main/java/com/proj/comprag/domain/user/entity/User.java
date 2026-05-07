@@ -1,4 +1,4 @@
-package com.proj.compRAG.domain.user.entity;
+package com.proj.comprag.domain.user.entity;
 
 import jakarta.persistence.*;
 

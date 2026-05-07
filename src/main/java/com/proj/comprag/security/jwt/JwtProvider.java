@@ -1,8 +1,7 @@
-package com.proj.compRAG.security.jwt;
+package com.proj.comprag.security.jwt;
 
-import com.proj.compRAG.domain.user.entity.User;
+import com.proj.comprag.domain.user.entity.User;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
