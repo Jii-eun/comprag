@@ -1,0 +1,11 @@
+# S3 + Code Deploy 이용 시 필요
+version: 0.0
+os: linux
+files:
+  - source: /                         # S3에서 받은 전체 파일 중
+    destination: /home/ubuntu/app     # EC2의 이 위치로 복사한다
+hooks:
+  AfterInstall:                       # 파일 복사 후에
+    - location: scripts/deploy.sh     # 이 스크립트를 실행해라
+      timeout: 300
+      runas: ubuntu

@@ -1,0 +1,62 @@
+name: Deploy to Amazon EC2  # GitHub Actions 탭에 표시될 이름
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 코드 push가 발생하면 이 자동화가 시작
+
+env:
+  AWS_REGION:
+  S3_BUCKET_NAME: comprag-s3-bucket # AWS S3 이름
+  CODE_DEPLOY_APPLICATION_NAME: 내-애플리케이션-이름 # 직접 수정하세요
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: 내-배포-그룹-이름 # 직접 수정하세요
+
+jobs:
+  deploy: # 작업 단위
+    name: Deploy
+    runs-on: ubuntu-latest # GitHub내에서 빌리는 가상 컴퓨터(ubuntu)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4 # GitHub의 코드를 가상 컴퓨터로 가져옴
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4 # 빌드에 필요한 Java 환경 설치
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 1. 빌드 (Kotlin DSL 프로젝트)
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew # 권한(+x)을 줌 - 이 권한이 있어야 리눅스 환경인 GitHub 서버에서 빌드 가능
+
+      - name: Build with Gradle
+        run: ./gradlew clean bootJar
+          # clean: 이전 빌드시 생긴 찌꺼기 파일 clean후 재시작
+        # bootJar: Jar파일 생성
+
+      # 2. AWS 인증
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4  # Secrets에 넣은 키로 AWS 로그인
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # 3. S3에 업로드
+      - name: Upload to S3
+        run: |
+          aws deploy push \
+            --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+            --ignore-hidden-files \
+            --s3-location s3://${{ env.S3_BUCKET_NAME }}/deploy.zip \
+            --source .
+
+      # 4. CodeDeploy에 배포 요청
+      - name: CodeDeploy
+        run: |
+          aws deploy create-deployment \
+            --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+            --s3-location bucket=${{ env.S3_BUCKET_NAME }},bundleType=zip,key=deploy.zip
