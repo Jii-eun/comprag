@@ -1,8 +1,6 @@
-package com.proj.compRAG.config;
+package com.proj.comprag.config;
 
 import com.proj.comprag.security.jwt.JwtAuthFilter;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
