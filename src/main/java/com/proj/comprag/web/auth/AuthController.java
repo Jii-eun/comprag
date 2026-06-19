@@ -25,16 +25,16 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<Void> signUp(@RequestBody SignUpRequest request,
                                        HttpServletRequest httpReq) {
-        System.out.println("METHOD=" + httpReq.getMethod() +"/ URI=" + httpReq.getRequestURI());
+        // System.out.println("METHOD=" + httpReq.getMethod() +"/ URI=" + httpReq.getRequestURI());
         authService.signUp(request);
         return ResponseEntity.ok().build();
     }
     /** ResponseEntity
-     - ResponseEntity는 Spring Web에 포함되어있음.
-     - <T>는 응답 바디를 담을 타입
-     -> 성공/실패만 알려도되고, 전달할 데이터가 없기 때문에 Body를 비운 것
-     - ok() = HTTP 200 상태코드
-     - buid() = 바디 없이 응답 객체 완성
+        - ResponseEntity는 Spring Web에 포함되어있음.
+        - <T>는 응답 바디를 담을 타입
+    ** 성공/실패만 알려도되고, 전달할 데이터가 없기 때문에 Body를 비운 것
+        - ok() = HTTP 200 상태코드
+        - buid() = 바디 없이 응답 객체 완성
      */
 
     @PostMapping("/login")

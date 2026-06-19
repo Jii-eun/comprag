@@ -25,14 +25,11 @@ public class CategoryService {
     public UUID createCategory(UUID userId, CategoryCreateRequest request) {
 
         UUID cateId = UUID.randomUUID();
-        OffsetDateTime now = OffsetDateTime.now();
 
         Category cate = new Category(
               cateId,
               request.name(),
-              request.description(),
-              now,
-              now
+              request.description()
         );
 
         categoryRepository.save(cate);
@@ -51,7 +48,8 @@ public class CategoryService {
                         d.getId(),
                         d.getName(),
                         d.getDescription(),
-                        d.getCreatedAt()
+                        d.getCreatedAt(),
+                        d.getUpdatedAt()
                 )).toList();
 
         return results;

@@ -1,7 +1,7 @@
 package com.proj.comprag.service.document;
 
 import com.proj.comprag.common.exception.ErrorCode;
-import com.proj.comprag.common.exception.NotFoundException;
+import com.proj.comprag.common.exception.custom.NotFoundException;
 import com.proj.comprag.domain.category.repository.CategoryRepository;
 import com.proj.comprag.domain.document.entity.Document;
 import com.proj.comprag.domain.document.entity.DocumentVersion;
@@ -9,13 +9,11 @@ import com.proj.comprag.domain.document.repository.DocumentRepository;
 import com.proj.comprag.domain.document.repository.DocumentVersionRepository;
 import com.proj.comprag.domain.user.repository.UserRepository;
 import com.proj.comprag.dto.document.*;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.OffsetDateTime;
 import java.util.*;
@@ -46,7 +44,7 @@ public class DocumentService {
 
         // 1) 카테고리 ID 검증
 
-        // 비즈니스 로직 추가(카테고리 아이디 체크) ★★★★★g해야함...
+        // 비즈니스 로직 추가(카테고리 아이디 체크) ★★★★★ 해야함...
 //        if (!categoryRepository.existsById(request.categoryId())) {
 //            throw new CategoryNotFoundException(request.categoryId()); // 커스텀 예외
 //        }
@@ -62,8 +60,8 @@ public class DocumentService {
         Document savedDoc = documentRepository.save(doc);
 
         // 3) document_versions 테이블 저장 (content, created_at, updated_at
+        UUID versionId = UUID.randomUUID();
         UUID docId = savedDoc.getId();
-        UUID versionId = savedDoc.getLatestVersionId();
 
         DocumentVersion docVer = new DocumentVersion(
             versionId,
@@ -144,8 +142,9 @@ public class DocumentService {
 
         UUID nextVerId = UUID.randomUUID();
 
+        // 수정한 내용이 있을 경우
         if(titleChanged || categoryChanged || contentChanged) {
-            // 수정한 내용이 있을 경우
+
             OffsetDateTime now = OffsetDateTime.now();
 //            int nextVerNum = optional.map(v -> v.getVersionNumber() + 1).orElse(1);
             int nextVerNum = docVer.getVersionNumber() + 1;
@@ -161,6 +160,7 @@ public class DocumentService {
                         userId
                 );
                 documentVersionRepository.save(nextDocVer);
+                documentVersionRepository.flush();  // 진행 순서를 위해 추가
 
                 doc.setLatestVersionId(nextVerId);
             }
@@ -178,14 +178,15 @@ public class DocumentService {
 
 
         }
-            // 결과 값
-            UUID resultVersionId = contentChanged ? nextVerId : docVer.getId();
-            boolean changed = titleChanged || categoryChanged || contentChanged;
-            return new DocumentUpdateResponse(
-                    docId,
-                    resultVersionId,
-                    changed
-            );
+
+        // 결과 값
+        UUID resultVersionId = contentChanged ? nextVerId : docVer.getId();
+        boolean changed = titleChanged || categoryChanged || contentChanged;
+        return new DocumentUpdateResponse(
+                docId,
+                resultVersionId,
+                changed
+        );
     }
 
     @Transactional
@@ -205,6 +206,7 @@ public class DocumentService {
     public Document loadDocument(UUID docId) {
         return documentRepository.findByIdAndDeletedAtIsNull(docId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.DOCUMENT_NOT_FOUND));
+                // throw new RuntimeException("문서 없음") 을 커스텀 예외 NotFoundException으로 처리
     }
 
     // 문서 버전 검증 + 최신 버전 조회

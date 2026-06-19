@@ -1,5 +1,8 @@
 package com.proj.comprag.service.auth;
 
+import com.proj.comprag.common.exception.ErrorCode;
+import com.proj.comprag.common.exception.custom.UnauthorizedException;
+import com.proj.comprag.common.util.AESEncryptionUtil;
 import com.proj.comprag.domain.user.entity.User;
 import com.proj.comprag.domain.user.repository.UserRepository;
 import com.proj.comprag.dto.auth.AuthResponse;
@@ -16,14 +19,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class AuthService {
 
+    private final AESEncryptionUtil aes;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     // final 선언
     // 선언 시점에 값이 들어가건, 모든 생성자에서 초기화되어야 함
 
-    public AuthService(UserRepository userRepository,
+    public AuthService(AESEncryptionUtil aes, UserRepository userRepository,
                        PasswordEncoder passwordEncoder, JwtProvider jwtProvider) {
+        this.aes = aes;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtProvider = jwtProvider;
@@ -55,7 +60,11 @@ public class AuthService {
         Boolean matches = passwordEncoder.matches(request.password(), user.getPasswordHash());
 
         if(!matches) {
-            throw new IllegalArgumentException("이메일 혹은 패스워드가 틀렸습니다.2");
+//            throw new IllegalArgumentException("이메일 혹은 패스워드가 틀렸습니다.2");
+            // IllegalArgumentException = 메서드에 전달된 인자(argument)가 잘못됐다
+
+            // 커스텀 예외로 처리
+            throw new UnauthorizedException(ErrorCode.LOGIN_FAILED);
         }
 
         String accessToken = jwtProvider.createAccessToken(user);

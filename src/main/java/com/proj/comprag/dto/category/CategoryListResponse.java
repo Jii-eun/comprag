@@ -7,6 +7,7 @@ public record CategoryListResponse(
         UUID id,
         String name,
         String description,
-        OffsetDateTime createdAt
+        OffsetDateTime createdAt,
+        OffsetDateTime updatedAt
 ) {
 }

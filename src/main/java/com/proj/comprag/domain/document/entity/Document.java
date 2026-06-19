@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Document extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.UUID)
+    @GeneratedValue(strategy=GenerationType.UUID) // PK용
     @Column(name = "id", nullable = false)
     private UUID id;
 
@@ -29,7 +29,6 @@ public class Document extends BaseTimeEntity {
     private UUID createdBy;
 
     @Column(name = "latest_version_id")
-    @GeneratedValue(strategy=GenerationType.UUID)
     private UUID latestVersionId;
 
     @Column(name = "category_id", nullable = false)

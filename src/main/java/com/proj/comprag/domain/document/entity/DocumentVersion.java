@@ -4,6 +4,8 @@ import com.proj.comprag.domain.common.BaseTimeEntity;
 import com.proj.comprag.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -11,11 +13,12 @@ import java.util.UUID;
 @Entity
 @Table(name = "document_versions")
 @Getter
-public class DocumentVersion extends BaseTimeEntity {
+@EntityListeners(AuditingEntityListener.class)
+public class DocumentVersion {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.UUID)
     @Column(name = "id", nullable = false)
+//    @GeneratedValue(strategy=GenerationType.UUID) //
     private UUID id;
 
     @Column(name = "version_number", nullable = false)
@@ -41,12 +44,16 @@ public class DocumentVersion extends BaseTimeEntity {
     @JoinColumn(name = "created_by", insertable = false, updatable = false)
     private User user;
 
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private OffsetDateTime createdAt;
 
 
     protected DocumentVersion() {}
 
     public DocumentVersion(UUID verId, UUID docId, int verNum,
                            String content, String editReason, UUID createdBy) {
+        this.id = verId;
         this.documentId = docId;
         this.versionNumber = verNum;
         this.content = content;
