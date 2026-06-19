@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 
 public record ApiErrorResponse(
         String code,
-        String meessage,
+        String message,
         int status,
         String path,
         String method,
