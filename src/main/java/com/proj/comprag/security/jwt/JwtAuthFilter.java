@@ -23,6 +23,7 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor    // Lombok 있어야 사용가능한 컴포넌트 -> 없이 하려면 생성자 직접 주입하면 된다고 함
 public class JwtAuthFilter extends OncePerRequestFilter {
+    // 모든 요청마다 실행
 
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
@@ -61,18 +62,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         userRepository.findById(userId).ifPresent(user -> {
             // 최소 구현: 권한은 admin 여부만
-            var authroties = user.getIsAdmin()
+            var authorities = user.getIsAdmin()
                     ? List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
                     :  List.of(new SimpleGrantedAuthority("ROLE_USER"));
-
-            // 1) 그냥 찍기 (이것만으로도 보통 충분)
-            logger.info("authorities = "+ authorities);
-
-            // 2) 더 깔끔하게 권한 문자열만 찍기(추천)
-            logger.info( "authoritiesStr = "+ authorities.stream()
-                    .map(SimpleGrantedAuthority::getAuthority)
-                    .toList());
-
 
             var principal = new UserPrincipal(
                     user.getId(),
@@ -86,13 +78,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     authorities
             );
 
+            // 1) 그냥 찍기 (이것만으로도 보통 충분)
+            logger.info("authorities = "+ authorities);
+
+            // 2) 더 깔끔하게 권한 문자열만 찍기(추천)
+            logger.info( "authoritiesStr = "+ authorities.stream()
+                    .map(SimpleGrantedAuthority::getAuthority)
+                    .toList());
+            // 3) 기타
             logger.info("principal = "+ auth.getPrincipal());
             logger.info("isAuthenticated = "+ auth.isAuthenticated());
+//            logger.info("JVM zone={}" + java.time.ZoneId.systemDefault());
 
             SecurityContextHolder.getContext().setAuthentication(auth);
+            //SecurityContextHolder : 현재 request 동안 인증 정보 저장
         });
 
-        logger.info("JVM zone={}" + java.time.ZoneId.systemDefault());
 
         filterChain.doFilter(request, response);
 

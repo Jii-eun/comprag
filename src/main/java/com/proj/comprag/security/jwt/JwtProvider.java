@@ -64,8 +64,22 @@ public class JwtProvider {
     public UUID getUserId(String token) {
         Claims claims = Jwts.parser().verifyWith(secretKey).build()
                 .parseClaimsJws(token).getPayload();
-        // ?? Claim 객체
-        // ?? getpayload?
+
+        /*
+         .parser() : JWT 읽는 객체 생성
+         .verifyWith(secretKey): 서명 검증용 비밀키 설정 - 토큰이 서버에서 만든 게 맞는지 확인
+         .parseClaimsJws(token): JWT 해석 - 토큰 값 해석
+         .getPayload(): JWT 내부데이터 꺼내기
+         => 그 결과: Claim 객체: Map<String, Object>와 비슷한 객체로, get~를 통해서 내용물을 꺼낼 수 있음
+         형태:
+            {
+              "sub": "...",
+              "iat": "...",
+              "exp": "..."
+            }
+         */
+
+
         return UUID.fromString(claims.getSubject());
     }
 

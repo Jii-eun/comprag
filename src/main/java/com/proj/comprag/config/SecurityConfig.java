@@ -55,7 +55,10 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-        // 모르겟어... https://chanho0912.tistory.com/33
+        // 디비에 동일한 비밀번호를 사용하는 계정들의 정보를 보호하기 위해,
+        // 그리고 RainbowTable Attack과 같은 공격을 막기 위해
+        // random Salt를 사용하여 같이 Encoding을 진행
+        // 단방향 해쉬 -> 역산 불가능
     }
 }
 
