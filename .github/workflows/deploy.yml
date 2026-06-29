@@ -2,7 +2,10 @@ name: CI/CD with SSH
 
 on:
   push:
-    branches: [ main ] # main 브랜치에 push하면 시작
+    branches:
+      - main # main 브랜치에 push하면 시작
+    paths-ignore:
+      - README.md
 
 jobs:
   deploy:
