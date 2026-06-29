@@ -1,36 +1,141 @@
-# 📂KnowledgeBase Engine 
-- 1단계: Core API
+# 📚 KnowledgeBase Engine
 
-## Project Overview
-- **목표**: 효율적인 지식 관리와 버전 제어를 위한 **지식 베이스 플랫폼**의 백엔드 파운데이션 구축.
-- **진행 단계** 
-  - 1단계
-    - 인증(Auth) 및 문서 CRUD 핵심 API 엔진 구축
-    - 클라우드 인프라 및 CI/CD 자동화 파이프라인 완성
+Spring Boot 기반 REST API 서버를 구현하고, 개발 환경 통일과 배포 자동화까지 구성한 개인 프로젝트입니다.
+이 프로젝트는 문서 CRUD와 AI를 활용한 지식 베이스(Knowledge Base) 플랫폼 구축을 목표로 합니다.
 
-## Tech Stack
-- Language: Java 17
-- Framework: Spring Boot 3.5.9
-- Database: PostgreSQL
-- Infrastructure: Docker, Docker Compose
-- Cloud: AWS EC2
-- CI/CD: GitHub Actons, SSH (Automated Deployment)
+개인적으로 DB 스키마 충돌과 개발 환경 차이로 인해 반복적인 재작업을 경험했습니다.
+이러한 문제를 직접 해결해 보고, 향후 AI 기반 지식 검색까지 확장할 수 있는 백엔드 구조를 만들어 보기 위해 시작했습니다.
 
-## Key Experience
-### 1. CI/CD 파이프라인을 통한 배포 자동화
- - **GitHub Actions와 SSH**를 연동하여 코드 업데이트 시 AWS 서버에 자동으로 반영도록 구축
- - 반복적인 배포 작업을 자동화하여 **개발 사이클을 단축**하고 운영 효율성 높이고자 함
+향후에는 저장된 문서를 AI가 검색·요약·질의응답에 활용할 수 있도록 LLM 기반 지식 검색(RAG) 기능을 단계적으로 확장할 계획입니다.
 
-### 2. Docker를 활용한 데이터 인프라 관리
-- **Docker 컨테이너로 PostgreSQL을 관리**하여, OS나 로컬 설정에 구애받지 않는 독립적인 개발이 가능한 Ready-to-Code 환경을 구축
-- DB 스키마 버전 관리: **Flyway**를 도입하여 SQL 스크립트를 통한 **데이터베이스 형상관리**를 자동화
-- Git에 포함된 Migration 히스토리를 통해 팀원 누구나 동일한 DB 스키마 상태를 유지할 수 있게 함으로써, 로컬 설정 차이로 인한 오류를 원천 차단
+---
 
-### 3.확장성을 고려한 서비스 설계
- - 향후 '버전 관리 지식베이스'로의 확장을 염두에 두고, 보안이 강화된 회원가입/로그인(Spring Security 등)과 유연한 문서 관리 API를 우선 구현
+# 🎯 프로젝트 목표
 
-## Deployment
-- API Endpoint: 13.60.244.84:8080
-- API Documentation
-  - [Postman Workspace 바로가기](https://www.postman.com/jieun-s-individual/workspace/comprag-aws)
-  - 
+현재 구현 범위(Core)
+
+* 회원 및 인증 시스템 구축
+* REST API 기반 문서 CRUD
+* Docker 기반 개발 환경 통일
+* Flyway 기반 DB 형상관리
+* GitHub Actions 기반 자동 배포
+
+향후 확장 계획
+
+* AI 기반 문서 검색 및 질의응답(RAG)
+* 문서 임베딩 및 Vector DB 연동
+* 자연어 검색 기능
+* AI 기반 문서 요약
+* 버전 관리 기능을 포함한 Knowledge Base 서비스 구축
+
+---
+
+# 📌 Tech Stack
+
+### Backend
+
+* Java 17
+* Spring Boot
+* Spring Security (JWT)
+
+### Database
+
+* PostgreSQL
+* Flyway
+
+### Infrastructure
+
+* Docker
+* Docker Compose
+* AWS EC2
+
+### CI/CD
+
+* GitHub Actions
+* SSH
+
+---
+
+# ✨ 주요 기능
+
+* 회원가입 / 로그인 (JWT 인증)
+* REST API 기반 문서 CRUD
+* PostgreSQL 연동
+* Flyway 기반 DB Migration 관리
+* Docker Compose 기반 개발 환경 구성
+* GitHub Actions를 이용한 자동 배포
+
+---
+
+# 🔧 프로젝트에서 해결하고자 했던 문제
+
+## 1. 개발 환경 차이
+
+개발 환경마다 발생하는 실행 환경 차이를 줄이기 위해 Docker Compose 기반 개발 환경을 구성했습니다.
+
+### 결과
+
+* 동일한 개발 환경 제공
+* 로컬 환경 설정 시간 감소
+* 실행 환경 차이 최소화
+
+---
+
+## 2. DB 스키마 불일치
+
+실무에서 경험한 DB 스키마 불일치 문제를 바탕으로 Flyway를 적용하여 스키마 변경 이력을 관리했습니다.
+
+### 결과
+
+* Migration 이력 관리
+* 동일한 DB 스키마 유지
+* 스키마 충돌 감소
+
+---
+
+## 3. 반복적인 수동 배포
+
+GitHub Actions를 활용하여 코드 Push 시 자동으로 EC2 서버에 배포되도록 구성했습니다.
+
+### 결과
+
+* Push만으로 자동 배포
+* 반복 작업 감소
+* 배포 과정 단순화
+
+---
+
+# 📂 프로젝트 구조
+
+com.proj.comprag
+├── config          # Spring 및 환경설정
+├── common          # 공통 응답, 예외 처리, 유틸
+├── security
+│   └── jwt         # JWT 인증/인가
+│
+├── domain          # Entity
+├── dto             # Request / Response DTO
+├── service         # 비즈니스 로직
+├── indexing        # 문서 인덱싱 (향후 AI 검색 확장)
+│
+├── web
+│   ├── auth        # 회원 인증 API
+│   ├── document    # 문서 CRUD API
+│   ├── admin       # 관리자 API
+│   ├── rag         # AI 검색 API (예정)
+│   └── debug       # 테스트 API
+│
+└── CompragApplication
+
+---
+
+# 🚀 실행 방법
+
+```bash
+docker-compose up -d
+```
+
+이후 Spring Boot 서버를 실행합니다.
+
+---
+
