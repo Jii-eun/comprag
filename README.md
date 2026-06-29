@@ -107,6 +107,7 @@ GitHub Actions를 활용하여 코드 Push 시 자동으로 EC2 서버에 배포
 
 # 📂 프로젝트 구조
 
+```text
 com.proj.comprag
 ├── config          # Spring 및 환경설정
 ├── common          # 공통 응답, 예외 처리, 유틸
@@ -126,6 +127,7 @@ com.proj.comprag
 │   └── debug       # 테스트 API
 │
 └── CompragApplication
+```
 
 ---
 
